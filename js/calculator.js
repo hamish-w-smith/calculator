@@ -23,7 +23,9 @@ function inputDigit(digit) {
     }
 }
 
-//
+//TODO
+//FUNCTION TO DO 
+
 function inputDecimal(dot) {
   //do not allow a second decimal point to be entered if waiting for second operand is true
 	if (calculator.waitingForSecondOperand === true) return;
@@ -37,8 +39,9 @@ function inputDecimal(dot) {
 
 function handleOperator(nextOperator) {
   const { firstOperand, displayValue, operator } = calculator //get values from calculator 
+
   const inputValue = parseFloat(displayValue); //convert display string to float
-  
+
   //Overwrite operator if an existing operator exists but a number hasn't been input
   if (operator && calculator.waitingForSecondOperand)  {
     calculator.operator = nextOperator;
@@ -49,7 +52,7 @@ function handleOperator(nextOperator) {
     calculator.firstOperand = inputValue;
     //else if operator in not null, set current value = to first operand and perform calculation.
   } else if (operator) {
-    const currentValue = firstOperand || 0; //cuurent value equals firstOperand unless it is null or zero
+    const currentValue = firstOperand || 0; //cuurent value equals firstOperand unless it is null, in which case it is zero
     const result = performCalculation[operator](currentValue, inputValue); //look up operator in performCalculation and carry out method with currentValue and inputValue
 
     calculator.displayValue = String(result);
@@ -74,10 +77,7 @@ const performCalculation = {
 
   'x**(1/y)': (firstOperand, secondOperand) => Math.pow(firstOperand,1/secondOperand),
 
-  '**2': (firstOperand, secondOperand) => firstOperand ** 2,
-
-  '**(1/2)': (firstOperand, secondOperand) => firstOperand ** 0.5,
-};
+}
 
 //All Clear
 function resetCalculator() {
@@ -96,10 +96,10 @@ function updateDisplay() {
 }
 updateDisplay();
 
-//Add event listeners
+//Event listeners
 const keys = document.querySelector('.calculator-keys');
   keys.addEventListener('click', (event) => {
-    const { target } = event; //object destructuring syntax... target = event.target
+    const target = event.target; //object destructuring syntax... target = event.target
     
     //check that click was a button
     if (!target.matches('button')) {
@@ -125,7 +125,6 @@ const keys = document.querySelector('.calculator-keys');
       updateDisplay();
       return;
     }
-
     inputDigit(target.value); //
     updateDisplay();
 });
